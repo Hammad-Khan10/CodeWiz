@@ -38,7 +38,7 @@ Each task lists what it needs first, what to watch out for, and when it counts a
   - A database trigger creates the `profiles` row for each new user.
   - Done when: every new user has a profile row without any browser code.
 
-Gig 3 candidate: AUTH-1 to AUTH-3 (see GIGS.md).
+**Gig 3 (bonus):** when AUTH-3 is done, the agent prepares it automatically (see GIGS.md).
 
 ## 2. Database
 
@@ -89,7 +89,7 @@ Gig 3 candidate: AUTH-1 to AUTH-3 (see GIGS.md).
   - Batched inserts into `functions` and `function_calls`, then update the repo's counts and status.
   - Done when: re-importing the same commit reuses the cache instead of parsing again.
 
-Gig 1: IMPORT and PARSE together (see GIGS.md).
+**Gig 1 (required):** when PARSE-5 is done, the agent prepares it automatically (see GIGS.md).
 
 ## 5. Repo map screens
 
@@ -103,6 +103,8 @@ Gig 1: IMPORT and PARSE together (see GIGS.md).
 - [ ] **MAP-3 Folder picker** (Core). Needs IMPORT-3
   - For big or cut-off repos, let the user pick a folder before parsing.
   - Done when: a large repo can be imported by choosing one folder.
+
+**Gig 6 (bonus):** when MAP-2 is done, the agent prepares it automatically (see GIGS.md). Build the call map in `components/call-map/` with no data fetching inside, so it lifts out cleanly.
 
 ## 6. AI layer
 
@@ -118,7 +120,7 @@ Gig 1: IMPORT and PARSE together (see GIGS.md).
   - Log route, model, tokens, time and validity, and count calls per user per day.
   - Done when: you can tell how many calls a full round costs.
 
-Gig 4 candidate: AI-1 (see GIGS.md).
+**Gig 4 (bonus):** when AI-1 is done, the agent prepares it automatically (see GIGS.md).
 
 ## 7. Rounds
 
@@ -162,7 +164,7 @@ Gig 4 candidate: AI-1 (see GIGS.md).
   - Watch out: the line numbers on screen must match the stored code exactly.
   - Done when: flags survive a page reload before submitting.
 
-Gig 2: DRILL-1 to DRILL-3 (see GIGS.md).
+**Gig 2 (required):** when DRILL-3 is done, the agent prepares it automatically (see GIGS.md).
 
 ## 10. Grading
 
@@ -221,7 +223,7 @@ Interface quality is 15% of judging. Broken layouts, placeholder text and unhand
 - [ ] **LIB-3 Suggestion card** (Extra). Needs LIB-2, SEC-3
   - A docs link, agree or disagree with a reason, graded by contract J.
 
-Gig 5 candidate: LIB-2 (see GIGS.md).
+**Gig 5 (only if the library check is built):** when LIB-2 is done, the agent prepares it automatically (see GIGS.md).
 
 ## 15. Extra: metrics panel
 
@@ -230,9 +232,9 @@ Gig 5 candidate: LIB-2 (see GIGS.md).
 
 ## 16. Gigs, QA and docs
 
-- [ ] **GIG-1 Publish the repo indexer** by Tuesday (GIGS.md)
-- [ ] **GIG-2 Publish the bug planter** by Wednesday (GIGS.md)
-- [ ] **GIG-3 Publish a bonus gig** if time allows (GIGS.md)
+- [ ] **GIG-1 Publish gig 1, GitHub Repo Indexer,** by Tuesday, from its GIG READY block
+- [ ] **GIG-2 Publish gig 2, Verified Bug Planter,** by Wednesday, from its GIG READY block
+- [ ] **GIG-3 Publish bonus gigs** (3, 4, 6, then 5) as they become ready, only while the core is on track
 - [ ] **QA-1 Daily smoke test** on the live site in a private window (QA_AND_SUBMISSION.md)
 - [ ] **QA-2 Two-account isolation test** on Wednesday
 - [ ] **QA-3 2FA test:** enrol, sign out, sign back in with a code

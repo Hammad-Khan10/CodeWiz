@@ -31,10 +31,11 @@ codewiz/
     profile/                understanding scores, skill profile, coverage
     api/                    route handlers (see API routes below)
   components/               shared UI, based on shadcn/ui
+    call-map/               React Flow call map component             -> gig 6
   lib/
     supabase/               browser, server and admin clients
     server/                 session and 2FA check, body parsing, daily cap, typed errors
-    ai/                     provider wrapper, prompts, zod schemas    -> gig 4
+    ai/                     provider wrapper, prompts, zod schemas    -> gig 4 (call-json.ts)
     repo-indexer/           GitHub import, parsing, calls, metrics     -> gig 1
     bug-planter/            planting and verification                  -> gig 2
     grading/                drill grading, real-bug check
@@ -43,7 +44,7 @@ codewiz/
   middleware.ts             session refresh and 2FA guard (proxy.ts in Next.js 16)
   supabase/migrations/      SQL schema and access rules, in order
   services/semgrep/         FastAPI app and Dockerfile, deployed separately
-  docs/                     these planning docs
+  docs/                     these planning docs, plus docs/gigs/ for gig handoffs
   SPEC.md  README.md  AI_DISCLOSURE.md
 ```
 
