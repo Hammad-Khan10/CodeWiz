@@ -121,7 +121,9 @@ Fizzah builds it. Merge it before anyone starts feature work.
 
 `create-next-app` may refuse to run in a folder that already has files. If it does, scaffold in a temporary folder and copy the files into the repo. Don't delete the docs.
 
-### Phase 2: fork setup (everyone, about 10 minutes)
+### Phase 2: fork setup (M Hammad, Fizzah and Hammad Khan, about 10 minutes)
+
+Roshaan owns the repo, so he skips this step: GitHub doesn't let you fork your own repo into the same account. He clones `RoshaanT1/CodeWiz` directly and works in branches on it.
 
 ```
 # Fork RoshaanT1/CodeWiz on GitHub, then:
@@ -145,6 +147,8 @@ git fetch upstream && git merge upstream/main   # just before opening the PR
 git push origin QUIZ-2-grade-answers
 # open a pull request: your fork's branch → RoshaanT1/CodeWiz main
 ```
+
+Roshaan does the same on the main repo, using `git pull origin main` instead of the `upstream` steps. He still opens a pull request for each task, so the history looks the same for everyone.
 
 ### Who owns what
 

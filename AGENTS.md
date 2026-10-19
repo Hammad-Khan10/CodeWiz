@@ -98,7 +98,7 @@ Each AI step (A to J) is defined in the "AI contracts" section of `docs/ARCHITEC
 
 ## Workflow: forks and pull requests
 
-Each of us works in a personal fork and opens pull requests into `RoshaanT1/CodeWiz`.
+Each of us works in a personal fork and opens pull requests into `RoshaanT1/CodeWiz`. Roshaan owns the repo, and GitHub doesn't let you fork your own repo into the same account, so he works in branches on the main repo instead: `git checkout main && git pull origin main`, then the same branch, commit and pull request steps.
 
 | Step | Command or rule |
 |---|---|
