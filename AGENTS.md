@@ -148,6 +148,7 @@ Some tasks complete a Devmarketplace code gig. When you finish one of these, run
 Each team member gets one free AI token reset during the hackathon. Any reset beyond that counts against us in judging.
 
 - Read only the files the task needs. Use the "Where things go" table instead of scanning the repo.
+- The docs are long. Search for your task ID or the section heading (for example `AI-1` in `docs/TASKS.md`, or `AI contracts` in `docs/ARCHITECTURE.md`) and read only that part. Never read a whole doc to find one task.
 - Plan in a few lines before writing code, then make targeted edits. Don't rewrite whole files.
 - One task per session. Start a fresh session for the next task.
 - Test AI steps with a fake model function first (see the `add-ai-step` skill). Call the real model only when the checks pass.
