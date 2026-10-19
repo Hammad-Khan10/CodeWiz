@@ -20,14 +20,16 @@ Nobody has to remember to ask for a gig.
 
 ## Gigs by stage
 
-| Stage | Gig | Trigger task | Code lives in | Priority |
-|---|---|---|---|---|
-| Monday night | 3. Supabase TOTP 2FA | AUTH-3 | middleware or proxy, `app/(auth)/`, `lib/server/` | Bonus |
-| Tuesday | 1. GitHub Repo Indexer | PARSE-5 | `lib/repo-indexer/` | Required |
-| Tuesday | 4. Typed LLM JSON Calls | AI-1 | `lib/ai/call-json.ts` | Bonus |
-| Wednesday | 2. Verified Bug Planter | DRILL-3 | `lib/bug-planter/` | Required |
-| Wednesday | 6. React Call Map | MAP-2 | `components/call-map/` | Bonus |
-| Thursday | 5. Package Registry Verifier | LIB-2 | `lib/registry-verifier/` | Only if the library check gets built |
+| Stage | Gig | Trigger task | Built by | Code lives in | Priority |
+|---|---|---|---|---|---|
+| Monday night | 3. Supabase TOTP 2FA | AUTH-3 | Fizzah | middleware or proxy, `app/(auth)/`, `lib/auth/` | Bonus |
+| Tuesday | 1. GitHub Repo Indexer | PARSE-5 | M Hammad | `lib/repo-indexer/` | Required |
+| Tuesday | 4. Typed LLM JSON Calls | AI-1 | Roshaan | `lib/ai/call-json.ts` | Bonus |
+| Wednesday | 2. Verified Bug Planter | DRILL-3 | Roshaan | `lib/bug-planter/` | Required |
+| Wednesday | 6. React Call Map | MAP-2 | Fizzah | `components/call-map/` | Bonus |
+| Thursday | 5. Package Registry Verifier | LIB-2 | Roshaan | `lib/registry-verifier/` | Only if the library check gets built |
+
+Hammad Khan publishes every gig from its GIG READY block.
 
 Gigs 1 and 2 come first. Publish a bonus gig only while the core build is on track. Two good gigs beat six rushed ones.
 
@@ -134,7 +136,7 @@ Titles and descriptions are already within the character limits. The code snippe
 Write each gig's code this way from the start, not as a clean-up at the end.
 
 - **Its own folder** (for example `lib/repo-indexer/`), with one `index.ts` that exports a small public API. Gig 4 is a single file, `lib/ai/call-json.ts`.
-- **No app imports.** Nothing from `app/`, `lib/supabase/`, `lib/server/`, shared components or our database types. Pass in what it needs: tokens, an LLM call function, limits.
+- **No app imports.** Nothing from `app/`, `lib/supabase/`, `lib/server/`, `lib/auth/`, shared components or our database types. Pass in what it needs: tokens, an LLM call function, limits.
 - **Typed inputs and outputs.** Export the types so users know exactly what goes in and what comes out.
 - **No secrets or hard-coded URLs.** Everything is configurable, with sensible defaults.
 - **Errors as results.** Return `{ ok: false, reason }` rather than throwing raw strings.

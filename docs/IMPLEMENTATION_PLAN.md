@@ -58,9 +58,9 @@ The critical path is import → parse → rank and select → quiz → drill →
 | Time | Milestone |
 |---|---|
 | 9:00 to 9:30 | Briefing, problem sign-off, AI credits. Confirm the contracts in ARCHITECTURE.md |
-| 9:30 to 11:00 | One person builds the skeleton in the main repo (Phase 1 below) and deploys it. Everyone else forks, clones and sets up their machine. Team lead creates the Devpost project |
+| 9:30 to 11:00 | Fizzah builds the skeleton in the main repo (Phase 1 below) and deploys it. Everyone else forks, clones and sets up their machine. Team lead creates the Devpost project |
 | 11:00 | Skeleton merged. Everyone syncs their fork |
-| 11:00 to 12:30 | In forks, in parallel: sign-up and sign-in pages, repo URL form and GitHub import, the first migration, the tree-sitter parse route |
+| 11:00 to 12:30 | In forks, in parallel: Fizzah on sign-up and sign-in, M Hammad on the first migration, GitHub import and the parse route, Roshaan on the AI wrapper |
 | 12:30 | Merge window. Check everything works together on the live site |
 | 12:45 to 1:00 | Show an organiser in the Devmarketplace workspace. Hand in PRIOR_WORK.md if needed |
 
@@ -76,8 +76,8 @@ If parsing isn't live by 12:45, show the file list. Never miss the checkpoint fo
 ### Tuesday 20: repo map and quiz
 
 - Ranking, AI selection with reasons, rounds of 3, 5 or 10
-- Repo page with the call map and function list
-- Round flow with progressive generation
+- Repo page with the function list
+- Round flow screen
 - Quiz generation, answers, grading, explanation reveal
 - **Publish gig 1** (GitHub Repo Indexer)
 
@@ -88,6 +88,7 @@ If parsing isn't live by 12:45, show the file list. Never miss the checkpoint fo
 - Bug planting with verification
 - Drill screen with line comments
 - Drill grading and the real-bug check
+- Call map and folder picker, and progressive generation for rounds
 - Results page, understanding score, skill profile, history, coverage
 - **Publish gig 2** (Verified Bug Planter)
 - Two-account isolation test and restart test (see QA_AND_SUBMISSION.md)
@@ -109,7 +110,7 @@ If parsing isn't live by 12:45, show the file list. Never miss the checkpoint fo
 
 ### Phase 1: skeleton (one person, in the main repo)
 
-Ideally whoever owns the frontend and platform. Merge it before anyone starts feature work.
+Fizzah builds it. Merge it before anyone starts feature work.
 
 - Next.js scaffolded with shadcn/ui, deployed to Vercel from `main`
 - The folder structure from ARCHITECTURE.md, with empty `index.ts` files
@@ -145,17 +146,33 @@ git push origin QUIZ-2-grade-answers
 # open a pull request: your fork's branch → RoshaanT1/CodeWiz main
 ```
 
-### Folder ownership
+### Who owns what
 
-The owner is the only person who edits a folder; everyone else asks. This is what keeps merge conflicts rare.
+The build is split into three feature slices of about equal size. Each of the three developers owns a slice end to end, including its AI steps, so everyone works in parallel on separate folders. The owner is the only person who edits a folder; everyone else asks.
 
-| Folder | Owner |
-|---|---|
-| `app/` pages, `components/` | Fizzah Abdullah |
-| `lib/repo-indexer/`, `lib/server/`, `supabase/` | M Hammad Khan |
-| `lib/ai/`, `lib/bug-planter/`, `lib/grading/`, `lib/scoring/` | Roshaan Tahir |
-| `docs/`, `README.md`, `AI_DISCLOSURE.md` | Hammad Khan |
-| `app/api/` | Each route belongs to whoever owns the logic it calls |
+| Owner | Slice | Folders | AI steps | Code gigs |
+|---|---|---|---|---|
+| Roshaan Tahir | Bug drills and scoring | `lib/ai/` (wrapper), `lib/bug-planter/`, `lib/grading/`, `lib/scoring/`, `lib/registry-verifier/`, `components/drill/`, `components/results/`, results and profile pages | D plant, E confirm, F score explanation, H library suggestion | 2, 4, 5 |
+| M Hammad Khan | Repo analysis and selection | `lib/repo-indexer/`, `lib/selection/`, `lib/real-bug-check/`, `lib/server/`, `supabase/`, `services/semgrep/` | A select, G real-bug check with tools, I explain Semgrep finding | 1 |
+| Fizzah Abdullah | App, auth and quiz | `app/` (except results and profile), middleware or proxy, `lib/auth/`, `lib/quiz/`, shared `components/`, `components/call-map/`, `components/quiz/`, `components/suggestions/` | B quiz pack, C grade answer, J grade reasoning | 3, 6 |
+| Hammad Khan | Testing, docs, demo | `docs/`, `README.md`, `AI_DISCLOSURE.md` | None | Publishes all of them |
+
+Each AI step's prompt and schema files belong to that step's owner. Each route in `app/api/` belongs to the owner of the feature it serves.
+
+### Who does what each day
+
+| Day | Roshaan | M Hammad | Fizzah | Hammad Khan |
+|---|---|---|---|---|
+| Mon | AI wrapper with schema checks and retries (gig 4 trigger), logging, shared prompt helpers | Supabase, full migration with access rules, profile trigger, GitHub import, parse route working on Vercel | Skeleton and deploy by 11 AM, sign-up and sign-in, 2FA enrolment and guard (gig 3 trigger) | GitHub issues from TASKS.md with owners, sample repos, testing sign-up on the live site |
+| Tue | Bug planting and verification (gig 2 trigger), drill screen | Calls, metrics, ranking, storing the index (gig 1 trigger), AI function selection, creating rounds | Repo page, round flow screen, quiz generation and grading with the explanation reveal | Smoke test, publishing gigs 1, 3 and 4, drafting the README |
+| Wed | Drill grading, results page, understanding score, skill profile, profile page | Real-bug check with tool calls, two-account test fixes | Call map (gig 6 trigger), folder picker, progressive generation | Two-account and restart tests, publishing gigs 2 and 6, drafting AI_DISCLOSURE |
+| Thu | Library check with registry verification (gig 5 trigger), merges, fixes | Semgrep service and finding explanations | Suggestion cards with "defend your choice", metrics panel, polish | Final checklist, demo video, Devpost text, submitting by 8 PM |
+
+### What each slice waits on
+
+- **Fizzah's skeleton (Monday, 11 AM)** unblocks everyone. Until it's merged, set up your machine and read your part of ARCHITECTURE.md.
+- **Roshaan's AI wrapper (Monday)** unblocks every AI step. Until it's merged, build your step against a fake model function that returns fixed JSON.
+- **M Hammad's index (Tuesday)** unblocks selection, quiz context and drills. Until it's merged, use a small JSON file of sample functions in the agreed shape.
 
 ### Shared files
 
@@ -168,7 +185,7 @@ These are where conflicts happen. Each change gets its own small pull request, a
 
 ### Merging
 
-- Only the repo owner can merge pull requests from forks, unless a teammate is added as a collaborator. Merge at fixed times each day (12:30, 4, 8 and 11 PM), or make one teammate a collaborator so merging never waits on one person.
+- Roshaan merges, since it's his repo, at fixed times each day: 12:30, 4, 8 and 11 PM. Add M Hammad as a collaborator too, so merging never waits on one person.
 - Use "Create a merge commit", not squash, so everyone's commits and dates stay in the history.
 - Vercel may hold preview builds from forks until the owner approves them, so test locally before opening a pull request.
 - After each merge window, everyone syncs their fork.

@@ -59,12 +59,18 @@ Before saying a task is done, run lint, type check, tests and build, and fix any
 |---|---|
 | `app/` | Pages, plus route handlers in `app/api/` |
 | `components/` | Shared UI. Use existing shadcn/ui components before writing new ones |
+| `components/quiz/`, `components/drill/`, `components/results/`, `components/suggestions/` | Feature components |
 | `components/call-map/` | Call map component, published as a code gig |
 | `lib/supabase/` | Browser, server and admin clients |
-| `lib/server/` | Shared server helpers: session and 2FA check, body parsing, daily cap, typed errors |
-| `lib/ai/` | Provider wrapper, plus one prompt file and one zod schema per AI step |
+| `lib/auth/` | Session and 2FA checks for pages and API routes |
+| `lib/server/` | Shared server helpers: body parsing, daily cap, typed errors |
+| `lib/ai/` | Provider wrapper and shared prompt helpers, plus one prompt file and one zod schema per AI step in `prompts/` and `schemas/` |
 | `lib/repo-indexer/`, `lib/bug-planter/`, `lib/registry-verifier/` | Code gig folders, each with its own AGENTS.md |
-| `lib/grading/`, `lib/scoring/` | Grading and scoring logic |
+| `lib/selection/` | Ranking shortlist and AI function selection |
+| `lib/quiz/` | Quiz pack generation, answer grading, explanations |
+| `lib/grading/` | Drill flag matching and explanation scoring |
+| `lib/real-bug-check/` | Real-bug check with tool calls |
+| `lib/scoring/` | Understanding score, skill profile, coverage |
 | `supabase/migrations/` | SQL migrations. See `supabase/AGENTS.md` |
 | `services/semgrep/` | Python service (extra) |
 | `docs/gigs/` | Code gig handoff files and thumbnails |
@@ -109,15 +115,16 @@ A task is done when it's merged, works on the live site, has loading, empty and 
 
 ## Folder ownership
 
-Edit only the folders your task belongs to. If the task needs a change in someone else's folder or in a shared file, stop and say so instead of making the change.
+The work is split into three feature slices of about equal size, each with its own AI steps, plus testing and docs. Edit only the folders you own. If a task needs a change in someone else's folder or in a shared file, stop and say so instead of making the change.
 
-| Folder | Owner |
-|---|---|
-| `app/` pages, `components/` | Fizzah Abdullah |
-| `lib/repo-indexer/`, `lib/server/`, `supabase/` | M Hammad Khan |
-| `lib/ai/`, `lib/bug-planter/`, `lib/grading/`, `lib/scoring/` | Roshaan Tahir |
-| `docs/`, `README.md`, `AI_DISCLOSURE.md` | Hammad Khan |
-| `app/api/` | Each route belongs to whoever owns the logic it calls |
+| Owner | Folders | AI steps |
+|---|---|---|
+| Roshaan Tahir | `lib/ai/` (wrapper and shared helpers), `lib/bug-planter/`, `lib/grading/`, `lib/scoring/`, `lib/registry-verifier/`, `components/drill/`, `components/results/`, the results and profile pages | D, E, F, H |
+| M Hammad Khan | `lib/repo-indexer/`, `lib/selection/`, `lib/real-bug-check/`, `lib/server/`, `supabase/`, `services/semgrep/` | A, G, I |
+| Fizzah Abdullah | `app/` (except the results and profile pages), middleware or proxy, `lib/auth/`, `lib/quiz/`, shared `components/`, `components/call-map/`, `components/quiz/`, `components/suggestions/` | B, C, J |
+| Hammad Khan | `docs/`, `README.md`, `AI_DISCLOSURE.md` | None |
+
+Each AI step's prompt and schema files in `lib/ai/prompts/` and `lib/ai/schemas/` belong to that step's owner. Each route in `app/api/` belongs to the owner of the feature it serves.
 
 **Shared files** each get their own small pull request, announced in the team chat: `package.json` and the lockfile, shared types and zod schemas used across folders, migrations, the root layout and navigation, and this file.
 
