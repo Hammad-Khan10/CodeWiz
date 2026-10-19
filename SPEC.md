@@ -173,9 +173,9 @@ The four of us work in parallel. Each row is what must be working on the live UR
 
 | Member | Owns |
 |---|---|
-| Roshaan Tahir | AI features: quiz, bug drills and their checks, grading, understanding score, library check; code gig 2 |
-| M Hammad Khan | Backend and analysis: repo import, parsing, call map, metrics, Semgrep service, database schema and Row Level Security; code gig 1 |
-| Fizzah Abdullah | Frontend and platform: every screen, the call map view, sign-up and 2FA flows, deployment |
+| Roshaan Tahir | Bug drills and scoring: AI wrapper, bug planting and verification, drill grading, results, understanding score, skill profile, library check; code gigs 2 and 4 |
+| M Hammad Khan | Repo analysis and selection: GitHub import, parsing and call map data, ranking, AI function selection, the real-bug check with tool calls, database and access rules, Semgrep service; code gig 1 |
+| Fizzah Abdullah | App, auth and quiz: skeleton and deployment, sign-up and 2FA, repo page and call map, round flow, quiz generation and grading with explanations, "defend your choice"; code gigs 3 and 6 |
 | Hammad Khan | QA, docs and demo: sample repos, the daily test checklist (two accounts, 2FA, restart), README, AI_DISCLOSURE, Devpost write-up, demo video, questions to organisers on Discord |
 
 ## 13. Reuse plan

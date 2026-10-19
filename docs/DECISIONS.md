@@ -21,4 +21,5 @@ What we decided, and why. Change a decision only after the team agrees, and add 
 | Scope | Core first. Extras (Semgrep, library check, metrics panel) sit behind feature flags, and Semgrep is the first to cut | The judges said a finished MVP beats many half-built features |
 | Framing | A global problem, not tied to one country | A wider market, and the platform's owner is US-based |
 | Code gigs | Six planned, two required, each tied to a trigger task. The agent prepares the form content automatically and a human publishes it | Gigs are judged and must be published during the build, not at the end |
+| Team split | Three equal feature slices, each with its own AI steps: Roshaan on drills and scoring, M Hammad on repo analysis and selection, Fizzah on the app, auth and quiz. Hammad Khan on testing, docs and publishing gigs | Everyone works in parallel on separate folders, and the AI work is shared fairly |
 | Workflow | Personal forks, pull requests into `RoshaanT1/CodeWiz`, merge commits rather than squash, and folder ownership | Parallel work with few conflicts, and a history that shows everyone's commits across all four days |

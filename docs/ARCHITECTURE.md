@@ -32,13 +32,18 @@ codewiz/
     api/                    route handlers (see API routes below)
   components/               shared UI, based on shadcn/ui
     call-map/               React Flow call map component             -> gig 6
+    quiz/, drill/, results/, suggestions/   feature components
   lib/
     supabase/               browser, server and admin clients
-    server/                 session and 2FA check, body parsing, daily cap, typed errors
+    auth/                   session and 2FA checks for pages and API routes
+    server/                 body parsing, daily cap, typed errors
     ai/                     provider wrapper, prompts, zod schemas    -> gig 4 (call-json.ts)
     repo-indexer/           GitHub import, parsing, calls, metrics     -> gig 1
+    selection/              ranking shortlist and AI function selection
+    quiz/                   quiz packs, answer grading, explanations
     bug-planter/            planting and verification                  -> gig 2
-    grading/                drill grading, real-bug check
+    grading/                drill flag matching and explanation scoring
+    real-bug-check/         real-bug check with tool calls
     scoring/                understanding score, skill profile, coverage
     registry-verifier/      npm, PyPI and stdlib checks                -> gig 5
   middleware.ts             session refresh and 2FA guard (proxy.ts in Next.js 16)
