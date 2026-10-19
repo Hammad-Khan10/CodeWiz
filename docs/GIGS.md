@@ -9,83 +9,139 @@
 - Only code we wrote gets published. Open-source pieces are linked under their own licences, not copied
 - Gigs are reviewed as part of judging
 
-## Our plan: two required, up to three bonus, published early
+## How gigs get made during the build
 
-| Gig | Built from | Publish by | Why another developer would want it |
+Nobody has to remember to ask for a gig.
+
+1. Each gig has a **trigger task** (table below). When an agent finishes that task, AGENTS.md tells it to prepare the gig straight away: check the code, write the README, pick the code snippet, and save everything in `docs/gigs/<slug>.md`.
+2. The agent ends its reply with a **GIG READY** block listing every field of the Devmarketplace form, in the form's order, ready to copy.
+3. A human opens Devmarketplace → **Add your Gigs** and fills in the form from that block.
+4. After publishing, update the tracker below and add the link to the Devpost draft.
+
+## Gigs by stage
+
+| Stage | Gig | Trigger task | Code lives in | Priority |
+|---|---|---|---|---|
+| Monday night | 3. Supabase TOTP 2FA | AUTH-3 | middleware or proxy, `app/(auth)/`, `lib/server/` | Bonus |
+| Tuesday | 1. GitHub Repo Indexer | PARSE-5 | `lib/repo-indexer/` | Required |
+| Tuesday | 4. Typed LLM JSON Calls | AI-1 | `lib/ai/call-json.ts` | Bonus |
+| Wednesday | 2. Verified Bug Planter | DRILL-3 | `lib/bug-planter/` | Required |
+| Wednesday | 6. React Call Map | MAP-2 | `components/call-map/` | Bonus |
+| Thursday | 5. Package Registry Verifier | LIB-2 | `lib/registry-verifier/` | Only if the library check gets built |
+
+Gigs 1 and 2 come first. Publish a bonus gig only while the core build is on track. Two good gigs beat six rushed ones.
+
+## Tracker
+
+| Gig | Status | Devmarketplace link | Commit |
 |---|---|---|---|
-| 1. GitHub Repo Indexer | IMPORT and PARSE tasks | Tuesday | Turns any public repo into functions, a call graph and metrics, for code search, docs or review tools |
-| 2. Verified Bug Planter | DRILL-1 to DRILL-3 | Wednesday | Generates realistic bugs with a checked answer key, for training, testing reviewers or testing test suites |
-| 3. Supabase TOTP 2FA for Next.js (bonus) | AUTH-1 to AUTH-3 | Monday night or Tuesday | 2FA is the most common reason hackathon projects fail, and every Next.js and Supabase app needs it |
-| 4. Typed LLM JSON Calls (bonus) | AI-1 | Wednesday | One function for schema-checked JSON from OpenAI or Anthropic, with retry |
-| 5. Package Registry Verifier (bonus) | LIB-2 | Thursday | Stops AI from recommending packages or functions that don't exist |
+| 1. GitHub Repo Indexer | Not started | | |
+| 2. Verified Bug Planter | Not started | | |
+| 3. Supabase TOTP 2FA | Not started | | |
+| 4. Typed LLM JSON Calls | Not started | | |
+| 5. Package Registry Verifier | Not started | | |
+| 6. React Call Map | Not started | | |
 
-Two good gigs beat five rushed ones. Get 1 and 2 out on time first.
+Status goes from Not started, to Ready (the agent prepared it), to Published (link added).
+
+## The Devmarketplace form
+
+| Field | Limit | Where it comes from |
+|---|---|---|
+| Import from GitHub | Optional | Try it with our repo first. If it can't point at one folder, fill the fields by hand from the GIG READY block |
+| Thumbnail | JPEG or PNG, up to 5 MB | Ready-made in `docs/gigs/thumbnails/` |
+| Title | 50 characters | Pre-written below |
+| Description | 200 characters | Pre-written below |
+| Skills | Pick from the list | Suggested below. Choose the closest ones the list offers |
+| Custom tags | Up to 10, press Enter after each | Pre-written below |
+| Code Snippet | Choose the language, then paste | Picked by the agent when the gig is ready |
+| Read ME | Rich text editor | The gig's README. Open it on GitHub, copy the rendered page and paste it in, so headings and lists keep their formatting |
+
+The form has no contributors field, so every README ends with a Contributors section naming all four of us: Roshaan Tahir, M Hammad Khan, Fizzah Abdullah, Hammad Khan.
+
+## Form content for each gig
+
+Titles and descriptions are already within the character limits. The code snippet and README are written by the agent when the gig is ready.
+
+### 1. GitHub Repo Indexer (required)
+
+- **Thumbnail:** `docs/gigs/thumbnails/github-repo-indexer.png`
+- **Title (49/50):** GitHub Repo Indexer: functions, calls and metrics
+- **Description (195/200):** Point it at a public GitHub repo and get every Python, JavaScript and TypeScript function with exact line ranges, a call graph and simple metrics. Uses tree-sitter. No cloning, no code execution.
+- **Skills:** TypeScript, Node.js
+- **Custom tags:** tree-sitter, Octokit, GitHub API, static analysis, call graph, code search
+- **Code snippet (TypeScript):** a short `indexRepo` call and what it returns
+- **Public API:** `indexRepo(options)` returns the repo's owner, name and commit SHA, plus `files`, `functions`, `calls`, `skipped` and a `truncated` flag. Options: `url`, `token`, an optional `folder`, and limits. Each function has `id`, `file`, `name`, `qualifiedName`, `language`, `startLine`, `endLine`, `code`, metrics, `category` and `importance`
+- **Done when:** someone can index all three sample repos from a clean install using only the README
+
+### 2. Verified Bug Planter (required)
+
+- **Thumbnail:** `docs/gigs/thumbnails/verified-bug-planter.png`
+- **Title (45/50):** Verified Bug Planter for code review practice
+- **Description (181/200):** Give it a function and get back a copy with 1 to 3 realistic bugs and an answer key. Every bug is checked: the diff matches the key, the code still parses and the behaviour changes.
+- **Skills:** TypeScript, Node.js, plus AI or LLM if the list has it
+- **Custom tags:** LLM, code review, bug seeding, jsdiff, tree-sitter, zod, education
+- **Code snippet (TypeScript):** a `plantBugs` call with an `llm` adapter, and how to read the result
+- **Public API:** `plantBugs(options)` returns `{ ok: true, changedCode, bugs }` or `{ ok: false, reason }`. Options: `code`, `language`, `startLine`, `count`, allowed `bugTypes`, an `llm` function (prompt and schema in, JSON out), and an optional `parse` function. Each bug has `lineStart`, `lineEnd`, `bugType`, `explanation` and `fix`
+- **Done when:** it works with both OpenAI and Anthropic by swapping only the `llm` function
+
+### 3. Supabase TOTP 2FA (bonus)
+
+- **Thumbnail:** `docs/gigs/thumbnails/supabase-totp-2fa.png`
+- **Title (40/50):** Supabase TOTP 2FA for Next.js App Router
+- **Description (177/200):** Drop-in 2FA for Next.js and Supabase: authenticator setup with a QR code, a code check at sign-in, and a guard that blocks pages, API routes and database rows until 2FA is done.
+- **Skills:** Next.js, React, TypeScript, Supabase, PostgreSQL
+- **Custom tags:** 2FA, TOTP, MFA, authentication, Row Level Security, App Router
+- **Code snippet (TypeScript):** the middleware or proxy guard that sends sessions without 2FA to the code screen
+- **Includes:** the enrolment page with QR code, the code entry page, the guard, a server-side check for API routes, an example policy that requires 2FA, and the profile trigger
+- **Done when:** a fresh Next.js app gets working 2FA by following the README
+
+### 4. Typed LLM JSON Calls (bonus)
+
+- **Thumbnail:** `docs/gigs/thumbnails/typed-llm-json.png`
+- **Title (39/50):** Typed LLM JSON calls with zod and retry
+- **Description (177/200):** One function to get schema-checked JSON from OpenAI or Anthropic. It validates the output with zod, retries once with the errors, and returns a clean result instead of throwing.
+- **Skills:** TypeScript, Node.js
+- **Custom tags:** LLM, zod, OpenAI, Anthropic, structured output, JSON, retry
+- **Code snippet (TypeScript):** a zod schema and a `callJson` call that returns typed data
+- **Public API:** `callJson({ prompt, schema, provider, model })` returns validated data, or a clean error after one retry
+- **Done when:** the same call works with either provider by changing two environment variables
+
+### 5. Package Registry Verifier (only if the library check gets built)
+
+- **Thumbnail:** `docs/gigs/thumbnails/package-registry-verifier.png`
+- **Title (42/50):** Package Registry Verifier for npm and PyPI
+- **Description (180/200):** Stops AI from recommending packages that don't exist. Checks npm, PyPI or the Python standard library, confirms the function appears in the package docs, and returns the docs link.
+- **Skills:** TypeScript, Node.js, Python
+- **Custom tags:** npm, PyPI, LLM, hallucination, package registry, verification
+- **Code snippet (TypeScript):** `verifyPackage` calls for a real package and a made-up one, side by side
+- **Public API:** `verifyPackage({ ecosystem, package, functionName })` returns whether the package exists, whether the function name appears in its README or description, and the docs link
+- **Done when:** it accepts a real package and rejects a made-up one
+
+### 6. React Call Map (bonus)
+
+- **Thumbnail:** `docs/gigs/thumbnails/react-call-map.png`
+- **Title (41/50):** React Call Map: callers and callees graph
+- **Description (166/200):** A React component that shows a function's callers and callees as an interactive graph, coloured by category. Click a node to move the view to it. Built on React Flow.
+- **Skills:** React, TypeScript, Next.js
+- **Custom tags:** React Flow, graph, call graph, visualisation, code navigation
+- **Code snippet (TypeScript):** `<CallMap />` used in a page with sample functions and calls
+- **Public API:** `<CallMap functions={...} calls={...} selectedId={...} onSelect={...} />`, with no data fetching inside
+- **Done when:** it renders sample data in a fresh React app using only the README
 
 ## How to build code so it lifts out cleanly
 
 Write each gig's code this way from the start, not as a clean-up at the end.
 
-- **Its own folder** under `lib/` (for example `lib/repo-indexer/`), with one `index.ts` that exports a small public API.
-- **No app imports.** Nothing from `app/`, `components/`, `lib/supabase/` or our database types. Pass in what it needs: tokens, an LLM call function, limits.
+- **Its own folder** (for example `lib/repo-indexer/`), with one `index.ts` that exports a small public API. Gig 4 is a single file, `lib/ai/call-json.ts`.
+- **No app imports.** Nothing from `app/`, `lib/supabase/`, `lib/server/`, shared components or our database types. Pass in what it needs: tokens, an LLM call function, limits.
 - **Typed inputs and outputs.** Export the types so users know exactly what goes in and what comes out.
 - **No secrets or hard-coded URLs.** Everything is configurable, with sensible defaults.
 - **Errors as results.** Return `{ ok: false, reason }` rather than throwing raw strings.
-- **A README in the folder:** what it does, install, setup, a short usage example, limits, dependencies with licences, contributors.
-- **One example or test** that shows it working.
-- **Framework-free, unless the gig is about the framework.** The 2FA gig is Next.js-specific by design. The indexer and the planter shouldn't be.
-
-## Publishing checklist (every gig)
-
-- [ ] A title that says what it does and is easy to search
-- [ ] A 2 to 3 sentence description: the problem, what it does, the stack
-- [ ] Setup steps another developer can follow from zero
-- [ ] A usage example
-- [ ] Dependencies listed with licences and links
-- [ ] All four teammates credited: Roshaan Tahir, M Hammad Khan, Fizzah Abdullah, Hammad Khan
-- [ ] Matches the code in our repo, with a link to the commit
-- [ ] Link added to our Devpost submission
-
-## Gig specs
-
-### 1. GitHub Repo Indexer
-
-**Title idea:** GitHub Repo Indexer: functions, call graph and metrics for any public repo
-
-**Description draft:** Point it at a public GitHub repo and get back every Python, JavaScript and TypeScript function with exact line ranges, an approximate call graph and simple metrics. It uses the GitHub API and tree-sitter, with no cloning and no code execution.
-
-**Public API:** `indexRepo(options)` returns the repo's owner, name and commit SHA, plus `files`, `functions`, `calls`, `skipped` and a `truncated` flag.
-- Options: `url`, `token`, an optional `folder`, and limits (max files, max file size, skip patterns, languages)
-- Each function: `id`, `file`, `name`, `qualifiedName`, `language`, `startLine`, `endLine`, `code`, metrics (`length`, `branches`, `callers`, `callees`, `dataAccess`), `category`, `importance`
-
-**Done when:** someone can index all three sample repos from a clean install using only its README.
-
-### 2. Verified Bug Planter
-
-**Title idea:** Verified Bug Planter: realistic, checked bugs for code review practice
-
-**Description draft:** Give it a function and get back a copy with 1 to 3 realistic bugs and an answer key. Every bug is checked: the diff must match the key, the code must still parse, and a second pass confirms the behaviour changes. Bring your own LLM.
-
-**Public API:** `plantBugs(options)` returns either `{ ok: true, changedCode, bugs }` or `{ ok: false, reason }`.
-- Options: `code`, `language`, `startLine`, `count`, allowed `bugTypes`, an `llm` function that takes a prompt and a schema and returns JSON, and an optional `parse` function for the syntax check
-- Each bug: `lineStart`, `lineEnd`, `bugType`, `explanation`, `fix`
-
-**Done when:** it works with both OpenAI and Anthropic by swapping only the `llm` function.
-
-### 3. Supabase TOTP 2FA for Next.js (bonus)
-
-**Includes:** an enrolment page with a QR code, a code entry page, the middleware or proxy guard that requires AAL2, a server-side check for API routes, an example access-rule policy that requires 2FA, and the profile trigger.
-
-**Done when:** a fresh Next.js app gets working 2FA by following the README.
-
-### 4. Typed LLM JSON Calls (bonus)
-
-**Public API:** `callJson({ prompt, schema, provider, model })` returns validated data, or a clean error after one retry.
-
-### 5. Package Registry Verifier (bonus)
-
-**Public API:** `verifyPackage({ ecosystem, package, functionName })` returns whether the package exists, whether the function name appears in its README or description, and the docs link.
+- **One example or test** that shows it working without secrets.
+- **Framework-free, unless the gig is about the framework.** Gigs 3 and 6 are framework-specific by design. The rest shouldn't be.
 
 ## Timing
 
 - Publish as soon as a gig works, then update it as it improves. Don't wait for polish.
-- If the folder rules above are followed from the start, packaging a gig should take about an hour.
+- If the rules above are followed from the start, publishing a gig from its GIG READY block takes about 15 minutes.

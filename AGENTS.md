@@ -59,6 +59,7 @@ Before saying a task is done, run lint, type check, tests and build, and fix any
 |---|---|
 | `app/` | Pages, plus route handlers in `app/api/` |
 | `components/` | Shared UI. Use existing shadcn/ui components before writing new ones |
+| `components/call-map/` | Call map component, published as a code gig |
 | `lib/supabase/` | Browser, server and admin clients |
 | `lib/server/` | Shared server helpers: session and 2FA check, body parsing, daily cap, typed errors |
 | `lib/ai/` | Provider wrapper, plus one prompt file and one zod schema per AI step |
@@ -66,6 +67,7 @@ Before saying a task is done, run lint, type check, tests and build, and fix any
 | `lib/grading/`, `lib/scoring/` | Grading and scoring logic |
 | `supabase/migrations/` | SQL migrations. See `supabase/AGENTS.md` |
 | `services/semgrep/` | Python service (extra) |
+| `docs/gigs/` | Code gig handoff files and thumbnails |
 
 ## Code conventions
 
@@ -119,6 +121,21 @@ Edit only the folders your task belongs to. If the task needs a change in someon
 
 **Shared files** each get their own small pull request, announced in the team chat: `package.json` and the lockfile, shared types and zod schemas used across folders, migrations, the root layout and navigation, and this file.
 
+**Exception:** whoever finishes a code gig writes its file in `docs/gigs/` and updates the tracker in `docs/GIGS.md`, in the same pull request.
+
+## Code gigs: announce them without being asked
+
+Some tasks complete a Devmarketplace code gig. When you finish one of these, run the `package-gig` skill straight away and end your reply with its GIG READY block, even if nobody asked for it. A human then publishes the gig by hand from that block.
+
+| Trigger task | Gig |
+|---|---|
+| AUTH-3 | 3. Supabase TOTP 2FA |
+| PARSE-5 | 1. GitHub Repo Indexer |
+| AI-1 | 4. Typed LLM JSON Calls |
+| DRILL-3 | 2. Verified Bug Planter |
+| MAP-2 | 6. React Call Map |
+| LIB-2 | 5. Package Registry Verifier |
+
 ## Token budget
 
 Each team member gets one free AI token reset during the hackathon. Any reset beyond that counts against us in judging.
@@ -138,4 +155,4 @@ Project skills live in `.agents/skills/`. Use one when the task matches:
 | `add-api-route` | Adding or changing a route in `app/api/` |
 | `add-migration` | Adding or changing tables, columns, indexes, triggers or policies |
 | `add-ai-step` | Building or changing any AI step (A to J) |
-| `package-gig` | Preparing a `lib/` folder to publish as a Devmarketplace code gig |
+| `package-gig` | Right after a gig trigger task, or when asked to prepare or check a code gig |
